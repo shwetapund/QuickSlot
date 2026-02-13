@@ -14,6 +14,27 @@ const mongoDBConn = async () =>{
 }
 mongoDBConn()
 
+//apis
+
+//health api
+app.get("/api/v1/healths",
+    (req,res)=>{
+        res.json({
+            success:true,
+            message:'server is healthy🤗'
+        })
+    }
+)
+
+
+
+
+
+
+
+
+
+
 const PORT = process.env.BASE_URL || 5000;
 
 app.listen(PORT, ()=>{
