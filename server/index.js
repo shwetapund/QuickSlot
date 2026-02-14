@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import healthApi from "./controllers/healthsApi";
 dotenv.config();
 
 const app = express();
@@ -17,14 +18,8 @@ mongoDBConn()
 //apis
 
 //health api
-app.get("/api/v1/healths",
-    (req,res)=>{
-        res.json({
-            success:true,
-            message:'server is healthy🤗'
-        })
-    }
-)
+app.get("/api/v1/healths",healthApi)
+    
 
 
 
