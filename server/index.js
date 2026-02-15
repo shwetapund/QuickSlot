@@ -1,7 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import healthApi from "./controllers/healthsApi";
+import healthApi from "./controllers/health.js";
+import signup from "./controllers/signup.js";
 dotenv.config();
 
 const app = express();
@@ -19,7 +20,7 @@ mongoDBConn()
 
 //health api
 app.get("/api/v1/healths",healthApi)
-    
+app.post("/api/v1/register",signup)   
 
 
 
