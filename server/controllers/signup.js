@@ -1,14 +1,17 @@
+import bcrypt, { hash } from 'bcryptjs';
 import User from './../models/User.js';
-
+import brcypt from 'bcryptjs';
 //register
 const register = async (req, res)=>{
 
     const {name, email, password, mobileNo, role} = req.body;
 
+    const hashPassword = await bcrypt.hash(password, 10);
+
     const user = new User({
         name,
         email,
-        password,
+        password: hashPassword,
         mobileNo,
         role
     });
