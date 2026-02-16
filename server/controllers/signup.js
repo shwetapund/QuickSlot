@@ -1,4 +1,5 @@
 import bcrypt, { hash } from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import User from './../models/User.js';
 
 //register
@@ -53,11 +54,56 @@ const loginApi = async (req, res) => {
         });
     }
 
-    res.json({
-        success: true,
-        message: "Login successful"
+    //access token
+    const accessToken = jwt.sign(
+        { id: user._id, role: user.role },
+        process.env.JWT_SECRET,
+        { expiresIn: "15m"}
+    );
+
+    //refresh token
+    const refreshToken = jwt.sign(
+        { id:user._id },
+        process.env.JWT_REFRESH_SECRET,
+        { expiresIn: "7d"}
+    );
+    res.cookie("refreshToken", refreshToken, {
+        httpOnly: true
     });
+
+    res.json({
+        accessToken
+    });
+    // res.json({
+    //     success: true,
+    //     message: "Login successful"
+    // });
+    
 };
 
-export { registerApi, loginApi };
+const refreshTokenHandler = (req,res)=>{
+    const token = req.cookie.refreshToken;
+
+    if(!token){
+        return res.status(403).json({
+            message: "No refresh token"
+        });
+    }
+    try{
+        const decoded = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
+
+        const newAccessToken = jwt.sign(
+            {id: user._id},
+            process.env.JWT_SECRET,
+            { expiresIn: "15m" }
+        );
+        res.json({
+            accessToken: newAccessToken
+        });
+    } catch(e){
+        res.status(403).json({ message: "Invaild refresh token"});
+    }
+};
+
+export { registerApi, loginApi, refreshTokenHandler };
 
