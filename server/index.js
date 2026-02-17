@@ -25,7 +25,7 @@ mongoDBConn()
 app.get("/api/v1/healths",healthApi)
 app.post("/api/v1/registers",registerApi)  
 app.post("/api/v1/logins",loginApi) 
-app.get("/api/v1/refresh", refreshTokenHandler)
+app.post("/api/v1/refresh", refreshTokenHandler)
 app.post("/api/v1/add-service",verifyToken, isAdmin, (req,res)=>{
     res.json({
         message: "service added"

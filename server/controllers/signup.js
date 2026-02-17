@@ -82,7 +82,7 @@ const loginApi = async (req, res) => {
 };
 
 const refreshTokenHandler = (req,res)=>{
-    const token = req.cookie.refreshToken;
+     const token = req.cookies.refreshToken;
 
     if(!token){
         return res.status(403).json({
@@ -93,7 +93,7 @@ const refreshTokenHandler = (req,res)=>{
         const decoded = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
 
         const newAccessToken = jwt.sign(
-            {id: user._id},
+            { id: decoded.id },
             process.env.JWT_SECRET,
             { expiresIn: "15m" }
         );
