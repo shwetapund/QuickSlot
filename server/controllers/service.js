@@ -43,6 +43,23 @@ const getservices = async ( req, res ) => {
         })
     }
 }
+//getservicesbyid
+const getservicesbyid = async ( req, res ) => {
+    try{
+        const {_id} = req.params;
 
+        const fetchService = await Service.findById(_id)
+        res.json({
+            success:true,
+            data: fetchService,
+            message: "successfully fetch service"
+        })
+    } catch(e){
+        res.json({
+            success:false,
+            message:e.message
+        })
+    }
+}
 
-export { addService, getservices };
+export { addService, getservices, getservicesbyid };
