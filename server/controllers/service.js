@@ -1,6 +1,7 @@
 import Service from './../models/Service.js';
 
-const addservice  = async ( req, res ) =>{
+//add-services
+const addService  = async ( req, res ) =>{
     const { name, imgUrl, description, fees, type, rating } = req.body;
 
     const service = new Service({
@@ -26,5 +27,22 @@ const addservice  = async ( req, res ) =>{
         })
     }
 }
+//get services
+const getservices = async ( req, res ) => {
+    try{
+        const getAllService = await Service.find({});
+        res.json({
+            success: true,
+            data: getAllService,
+            message: 'services fetch successfully'
+        })
+    } catch(e){
+        res.json({
+            success:false,
+            message: e.message
+        })
+    }
+}
 
-export default addservice;
+
+export { addService, getservices };
