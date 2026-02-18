@@ -6,7 +6,7 @@ const servicesSchema = new Schema({
         required:true
     },
     imgUrl:{
-        type:Image,
+        type: String,
         required:true
     },
     description:{
@@ -29,6 +29,6 @@ const servicesSchema = new Schema({
 { timestamps: true }
 );
 
-const Service = model('Serivce',servicesSchema);
+const Service = model('Service',servicesSchema);
 
 export default Service;
