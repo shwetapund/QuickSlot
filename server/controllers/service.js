@@ -61,5 +61,14 @@ const getservicesbyid = async ( req, res ) => {
         })
     }
 }
+//delete service
+const deleteservice = async ( req, res ) =>{
+    const { id } = req.params;
+    await Service.deleteOne({ _id:id })
+    res.json({
+        success:true,
+        message: "service delete successfully"
+    })
+}
 
-export { addService, getservices, getservicesbyid };
+export { addService, getservices, getservicesbyid, deleteservice };

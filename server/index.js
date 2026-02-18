@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import healthApi from "./controllers/health.js";
 import { registerApi, loginApi, refreshTokenHandler } from "./controllers/signup.js";
-import { addService, getservices, getservicesbyid } from "./controllers/service.js";
+import { addService, getservices, getservicesbyid, deleteservice } from "./controllers/service.js";
 import { verifyToken, isAdmin } from "./middlewares/authMiddleware.js";
 dotenv.config();
 
@@ -30,6 +30,7 @@ app.post("/api/v1/refresh", refreshTokenHandler)
 app.post("/api/v1/add-service",verifyToken, isAdmin, addService)
 app.get("/api/v1/getservice", getservices)
 app.get("/api/v1/getservice/:_id", getservicesbyid)
+app.delete("/api/v1/deleteservice/:id", deleteservice)
 
 const PORT = process.env.PORT || 5000;
 
